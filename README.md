@@ -1,5 +1,3 @@
-# NewTBSchedule
-Transform And Upgrade TBSchedule
 对[TBSchedule]分布式任务调度进行了简单改造；
 主要改造点：
 1、使用ScheduledExecutorService代替timer执行任务调度。Timer的缺陷：
