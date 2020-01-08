@@ -1,63 +1,42 @@
 package com.taobao.pamirs.schedule.zk;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
-import org.apache.zookeeper.WatchedEvent;
-import org.apache.zookeeper.Watcher;
-import org.apache.zookeeper.Watcher.Event.KeeperState;
+import org.apache.curator.framework.CuratorFramework;
+import org.apache.curator.framework.state.ConnectionState;
+import org.apache.curator.framework.state.ConnectionStateListener;
+import org.apache.zookeeper.CreateMode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ScheduleWatcher implements Watcher {
-	private static transient Logger log = LoggerFactory
-			.getLogger(ScheduleWatcher.class);
-	private Map<String, Watcher> route = new ConcurrentHashMap<String, Watcher>();
-	private ZKManager manager;
+public class ScheduleWatcher implements ConnectionStateListener {
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-	public ScheduleWatcher(ZKManager aManager) {
-		this.manager = aManager;
-	}
+    private String path;
+    private String data;
 
-	public void registerChildrenChanged(String path, Watcher watcher)
-			throws Exception {
-		manager.getZooKeeper().getChildren(path, true);
-		route.put(path, watcher);
-	}
+    public ScheduleWatcher(String path, String data) {
+        this.path = path;
+        this.data = data;
+    }
 
-	public void process(WatchedEvent event) {
-		if (log.isInfoEnabled()) {
-			log.info("已经触发了" + event.getType() + ":" + event.getState() + "事件！"
-					+ event.getPath());
-		}
-		if (event.getType() == Event.EventType.NodeChildrenChanged) {
-			String path = event.getPath();
-			Watcher watcher = route.get(path);
-			if (watcher != null) {
-				try {
-					watcher.process(event);
-				} finally {
-					try {
-						if (manager.getZooKeeper().exists(path, null) != null) {
-							manager.getZooKeeper().getChildren(path, true);
-						}
-					} catch (Exception e) {
-						log.error(path + ":" + e.getMessage(), e);
-					}
-				}
-			} else {
-				log.info("已经触发了" + event.getType() + ":" + event.getState()
-						+ "事件！" + event.getPath());
-			}
-		} else if (event.getState() == KeeperState.SyncConnected) {
-			log.info("收到ZK连接成功事件！");
-		} else if (event.getState() == KeeperState.Expired) {
-			log.error("会话超时，等待重新建立ZK连接...");
-			try {
-				manager.reConnection();
-			} catch (Exception e) {
-				log.error(e.getMessage(), e);
-			}
-		}
-	}
+    @Override
+    public void stateChanged(CuratorFramework client, ConnectionState newState) {
+        if (newState == ConnectionState.LOST) {
+            logger.error("[WED-JOB]zookeeper session expired...");
+            while (true) {
+                try {
+                    if (client.getZookeeperClient().blockUntilConnectedOrTimedOut()) {
+                        client.create()
+                                .creatingParentsIfNeeded()
+                                .withMode(CreateMode.EPHEMERAL_SEQUENTIAL)
+                                .forPath(path, data.getBytes());
+                        logger.info("[WED-JOB]zookeeper session rebuild...");
+                        break;
+                    }
+                } catch (Exception e) {
+                    logger.info("[WED-JOB]zookeeper session lost...");
+                    throw new RuntimeException("[WED-JOB]zookeeper session lost...");
+                }
+            }
+        }
+    }
 }
