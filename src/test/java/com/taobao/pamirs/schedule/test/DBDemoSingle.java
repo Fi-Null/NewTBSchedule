@@ -28,7 +28,7 @@ public class DBDemoSingle extends IScheduleTaskDealSingleBase<Long> {
     protected DataSource dataSource;
 
     @Override
-	public Comparator<Long> getComparator() {
+    public Comparator<Long> getComparator() {
         return new Comparator<Long>() {
             public int compare(Long o1, Long o2) {
                 return o1.compareTo(o2);
@@ -41,8 +41,8 @@ public class DBDemoSingle extends IScheduleTaskDealSingleBase<Long> {
     }
 
     @Override
-	public List<Long> selectTasks(String taskParameter, String ownSign,
-								  int taskItemNum, List<TaskItemDefine> queryCondition, int fetchNum)
+    public List<Long> selectTasks(String taskParameter, String ownSign,
+                                  int taskItemNum, List<TaskItemDefine> queryCondition, int fetchNum)
             throws Exception {
         List<Long> result = new ArrayList<Long>();
         if (queryCondition.size() == 0) {
@@ -90,7 +90,7 @@ public class DBDemoSingle extends IScheduleTaskDealSingleBase<Long> {
     }
 
     @Override
-	public boolean execute(Long task, String ownSign) throws Exception {
+    public boolean execute(Long task, String ownSign) throws Exception {
         Connection conn = null;
         Long id = (Long) task;
         try {
