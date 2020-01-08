@@ -1,4 +1,4 @@
-# 对[TBSchedule]分布式任务调度进行了简单改造；
+# 对[TBSchedule]分布式任务调度进行了简单改造
 **主要改造点：**
 1. 使用ScheduledExecutorService代替timer执行任务调度。Timer的缺陷：
     （1）Timer在执行定时任务时只会创建一个线程，所以如果存在多个任务，且任务时间过长，
