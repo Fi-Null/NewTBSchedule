@@ -408,6 +408,14 @@ abstract class TBScheduleManager implements IStrategyTask {
         }
     }
 
+    public ScheduledThreadPoolExecutor getHeartBeatTimer() {
+        return heartBeatTimer;
+    }
+
+    public void setHeartBeatTimer(ScheduledThreadPoolExecutor heartBeatTimer) {
+        this.heartBeatTimer = heartBeatTimer;
+    }
+
     public ScheduleTaskType getTaskTypeInfo() {
         return taskTypeInfo;
     }
@@ -461,7 +469,6 @@ class PauseOrResumeScheduleTask extends java.util.TimerTask {
     public static int TYPE_PAUSE = 1;
     public static int TYPE_RESUME = 2;
     TBScheduleManager manager;
-    ScheduledThreadPoolExecutor timer;
     int type;
     String cronTabExpress;
 
@@ -487,7 +494,7 @@ class PauseOrResumeScheduleTask extends java.util.TimerTask {
                 manager.resume("到达开始时间,resume调度");
                 this.manager.getScheduleServer().setNextRunStartTime(ScheduleUtil.transferDataToString(new Date(nextTime)));
             }
-            timer.schedule(new PauseOrResumeScheduleTask(this.manager, this.type, this.cronTabExpress), nextTime, TimeUnit.MILLISECONDS);
+            manager.getHeartBeatTimer().schedule(new PauseOrResumeScheduleTask(this.manager, this.type, this.cronTabExpress), nextTime, TimeUnit.MILLISECONDS);
         } catch (Throwable ex) {
             log.error(ex.getMessage(), ex);
         }

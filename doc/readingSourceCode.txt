@@ -2,3 +2,35 @@
 http://www.cnblogs.com/lengfo/p/4146797.html
 源码阅读：
 http://www.jianshu.com/p/e925756e663d
+
+
+task:
+/tbschedule/rootPath/baseTaskType
+
+/tbschedule/rootPath/baseTaskType/schedule  -- value:ScheduleTaskType.tostring
+
+/tbschedule/rootPath/baseTaskType/schedule/schedule$ownsign
+/tbschedule/rootPath/baseTaskType/schedule/schedule$ownsign/server
+/tbschedule/rootPath/baseTaskType/schedule/schedule$ownsign/server/schedule$ownsign$ip$uuid$
+/tbschedule/rootPath/baseTaskType/schedule/schedule$ownsign/server/schedule$ownsign$ip$uuid$  -- value: ScheduleServer.tostring
+
+/tbschedule/rootPath/baseTaskType/schedule/schedule$ownsign/taskItem -- value:ScheduleServer.uuid(schedule$ownsign$ip$uuid$)
+
+/tbschedule/rootPath/baseTaskType/schedule/schedule$ownsign/taskItem/1
+/tbschedule/rootPath/baseTaskType/schedule/schedule$ownsign/taskItem/1/cur_server
+/tbschedule/rootPath/baseTaskType/schedule/schedule$ownsign/taskItem/1/req_server
+/tbschedule/rootPath/baseTaskType/schedule/schedule$ownsign/taskItem/1/sts  -- value:taskItem.getSts().toString()
+/tbschedule/rootPath/baseTaskType/schedule/schedule$ownsign/taskItem/1/parameter  -- value:taskItem.getDealParameter()
+/tbschedule/rootPath/baseTaskType/schedule/schedule$ownsign/taskItem/1/deal_desc  -- value:taskItem.getDealDesc()
+/tbschedule/rootPath/baseTaskType/schedule/schedule$ownsign/taskItem/2
+/tbschedule/rootPath/baseTaskType/schedule/schedule$ownsign/taskItem/2/cur_server
+/tbschedule/rootPath/baseTaskType/schedule/schedule$ownsign/taskItem/2/req_server
+/tbschedule/rootPath/baseTaskType/schedule/schedule$ownsign/taskItem/2/sts  -- value:taskItem.getSts().toString()
+/tbschedule/rootPath/baseTaskType/schedule/schedule$ownsign/taskItem/2/parameter  -- value:taskItem.getDealParameter()
+/tbschedule/rootPath/baseTaskType/schedule/schedule$ownsign/taskItem/2/deal_desc  -- value:taskItem.getDealDesc()
+...
+
+
+
+
+/tbschedule/rootPath/ownsign/schedule$ownsign/taskItem
