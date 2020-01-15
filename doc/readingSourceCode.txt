@@ -3,6 +3,16 @@ http://www.cnblogs.com/lengfo/p/4146797.html
 源码阅读：
 http://www.jianshu.com/p/e925756e663d
 
+PERSISTENT
+/tbschedule/rootPath/strategy
+PERSISTENT
+/tbschedule/rootPath/strategy/strategyName -- scheduleStrategy
+EPHEMERAL
+/tbschedule/rootPath/strategy/strategyName/uuid
+
+/tbschedule/rootPath/factory
+EPHEMERAL_SEQUENTIAL
+/tbschedule/rootPath/factoryip$hostName$uuid
 
 task:
 /tbschedule/rootPath/baseTaskType
