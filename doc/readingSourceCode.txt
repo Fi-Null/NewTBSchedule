@@ -15,7 +15,6 @@ task:
 /tbschedule/rootPath/baseTaskType/schedule/schedule$ownsign/server/schedule$ownsign$ip$uuid$  -- value: ScheduleServer.tostring
 
 /tbschedule/rootPath/baseTaskType/schedule/schedule$ownsign/taskItem -- value:ScheduleServer.uuid(schedule$ownsign$ip$uuid$)
-
 /tbschedule/rootPath/baseTaskType/schedule/schedule$ownsign/taskItem/1
 /tbschedule/rootPath/baseTaskType/schedule/schedule$ownsign/taskItem/1/cur_server
 /tbschedule/rootPath/baseTaskType/schedule/schedule$ownsign/taskItem/1/req_server
@@ -29,8 +28,6 @@ task:
 /tbschedule/rootPath/baseTaskType/schedule/schedule$ownsign/taskItem/2/parameter  -- value:taskItem.getDealParameter()
 /tbschedule/rootPath/baseTaskType/schedule/schedule$ownsign/taskItem/2/deal_desc  -- value:taskItem.getDealDesc()
 ...
-
-
 
 
 /tbschedule/rootPath/ownsign/schedule$ownsign/taskItem
