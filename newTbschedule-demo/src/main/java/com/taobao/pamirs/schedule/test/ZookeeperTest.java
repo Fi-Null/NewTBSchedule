@@ -188,10 +188,6 @@ public class ZookeeperTest {
         int[] help = new int[arr.length];
 
         int L = startIndex, R = midIndex + 1, i = startIndex;
-        System.out.println("staIndex:" + startIndex + "," + arr[startIndex]
-                    + ", midIndex:" + midIndex+ "," + arr[midIndex]
-                    +",endIndex:" + endIndex+ "," + arr[endIndex]
-                    + ", helpIndex:" + help.length);
         while (L <= midIndex && R <= endIndex) { //只要没有指针没越界就逐次比较
             help[i++] = arr[L] < arr[R] ? arr[L++] : arr[R++];
         }
@@ -208,14 +204,16 @@ public class ZookeeperTest {
     }
 
     public void mergSort(int[] arr, int startIndex, int endIndex) {
-        int midIndex;
-        if (startIndex < endIndex) {
-            //(endIndex+startIndex)/2可能会导致int溢出，下面求中位数的做法更安全
-            midIndex = startIndex + ((endIndex - startIndex) >> 1);
-            mergSort(arr, startIndex, midIndex);        //对左半部分排序
-            mergSort(arr, midIndex + 1, endIndex);      //对右半部分排序
-            merge(arr, startIndex, midIndex, endIndex);  //使整体有序
+        if (startIndex >= endIndex) {
+            return;
         }
+
+        //(endIndex+startIndex)/2可能会导致int溢出，下面求中位数的做法更安全
+        int midIndex = startIndex + ((endIndex - startIndex) >> 1);
+        mergSort(arr, startIndex, midIndex);        //对左半部分排序
+        mergSort(arr, midIndex + 1, endIndex);      //对右半部分排序
+        merge(arr, startIndex, midIndex, endIndex);  //使整体有序
+
     }
 
     public void buildMaxHeap(int[] arr) {
