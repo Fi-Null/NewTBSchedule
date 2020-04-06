@@ -119,8 +119,10 @@ public class ZookeeperTest {
 
     public int partition(int[] arr, int startIndex, int endIndex) {
         int small = startIndex - 1;
+        int base = arr[endIndex];
+        // 以最后一个元素或者第一个元素为底进行分割。
         for (int i = startIndex; i < endIndex; ++i) {
-            if (arr[i] < arr[endIndex]) {
+            if (arr[i] < base) {
                 swap(arr, i, ++small);
             }
         }
@@ -248,7 +250,6 @@ public class ZookeeperTest {
 
         int heapSize = arr.length;
         swap(arr, 0, --heapSize);
-
         while (heapSize > 0) {
             heapify(arr, 0, heapSize);
             swap(arr, 0, --heapSize);
@@ -259,9 +260,9 @@ public class ZookeeperTest {
     public void testSort() {
         int[] arr = {3,1,2,5,4,3};
         //quickSort(arr, 0, arr.length - 1);
-        mergSort(arr, 0, arr.length - 1);
+        //mergSort(arr, 0, arr.length - 1);
 
-        //heapSort(arr);
+        heapSort(arr);
         System.out.println(Arrays.toString(arr));
     }
 }
